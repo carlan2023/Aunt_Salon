@@ -1,0 +1,339 @@
+{% extends 'base.html' %}
+{% block title %}Bookings - Aunt Salon{% endblock %}
+
+{% block extra_css %}
+<style>
+  .booking-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 30px 0;
+  }
+
+  .booking-form {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .booking-summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    height: fit-content;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: inherit;
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .btn-submit:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  }
+
+  .summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .summary-item:last-child {
+    border-bottom: none;
+  }
+
+  .summary-total {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .booking-list {
+    margin-top: 40px;
+  }
+
+  .booking-item {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 5px solid #667eea;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  .booking-item h4 {
+    color: #667eea;
+    margin-bottom: 10px;
+  }
+
+  .booking-item .status {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  .status.confirmed {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  .status.pending {
+    background: #fff3e0;
+    color: #e65100;
+  }
+
+  .status.cancelled {
+    background: #ffebee;
+    color: #c62828;
+  }
+
+  @media (max-width: 768px) {
+    .booking-container {
+      grid-template-columns: 1fr;
+    }
+
+    .booking-summary {
+      height: auto;
+    }
+  }
+</style>
+
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+  <h1>📅 Book Your Appointment</h1>
+  <p>
+    Schedule your visit with one of our expert stylists. Choose your preferred
+    date, time, and service.
+  </p>
+
+  <div class="booking-container">
+    <div class="booking-form">
+      <h2>Booking Form</h2>
+      <form onsubmit="handleBooking(event)">
+        <div class="form-group">
+          <label for="stylist">Select Stylist *</label>
+          <select id="stylist" required>
+            <option value="">Choose a stylist...</option>
+            <option value="sarah">Sarah Johnson - Color & Highlights</option>
+            <option value="emma">Emma Wilson - Cutting & Styling</option>
+            <option value="jessica">Jessica Brown - Perms & Treatments</option>
+            <option value="michelle">Michelle Davis - Bridal Hair</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="service">Select Service *</label>
+          <select id="service" required>
+            <option value="">Choose a service...</option>
+            <option value="haircut" data-price="45">Haircut - $45</option>
+            <option value="color" data-price="75">Hair Color - $75</option>
+            <option value="highlights" data-price="95">Highlights - $95</option>
+            <option value="treatment" data-price="40">
+              Deep Conditioning - $40
+            </option>
+            <option value="bridal" data-price="120">
+              Bridal Hairstyle - $120
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="date">Appointment Date *</label>
+          <input type="date" id="date" required />
+        </div>
+
+        <div class="form-group">
+          <label for="time">Appointment Time *</label>
+          <select id="time" required>
+            <option value="">Select a time...</option>
+            <option value="09:00">09:00 AM</option>
+            <option value="10:00">10:00 AM</option>
+            <option value="11:00">11:00 AM</option>
+            <option value="14:00">2:00 PM</option>
+            <option value="15:00">3:00 PM</option>
+            <option value="16:00">4:00 PM</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Special Requests (Optional)</label>
+          <textarea
+            id="notes"
+            placeholder="Any special requests or preferences..."
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Confirm Booking</button>
+      </form>
+    </div>
+
+    <div class="booking-summary">
+      <h3>💰 Booking Summary</h3>
+
+      <div class="summary-item">
+        <span>Stylist:</span>
+        <strong id="summaryStylest">Not selected</strong>
+      </div>
+
+      <div class="summary-item">
+        <span>Service:</span>
+        <strong id="summaryService">Not selected</strong>
+      </div>
+
+      <div class="summary-item">
+        <span>Date:</span>
+        <strong id="summaryDate">Not selected</strong>
+      </div>
+
+      <div class="summary-item">
+        <span>Time:</span>
+        <strong id="summaryTime">Not selected</strong>
+      </div>
+
+      <div class="summary-item">
+        <span>Price:</span>
+        <strong id="summaryPrice">$0</strong>
+      </div>
+
+      <div class="summary-total">
+        <div style="margin-bottom: 10px">
+          Total: <span id="totalPrice">$0</span>
+        </div>
+        <div style="font-size: 0.9em; opacity: 0.9">
+          A confirmation email will be sent to your registered email address.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="booking-list">
+    <h2>Recent Bookings</h2>
+
+    <div class="booking-item">
+      <h4>Haircut - Sarah Johnson</h4>
+      <p><strong>Date:</strong> December 15, 2025 at 10:00 AM</p>
+      <p><strong>Price:</strong> $45</p>
+      <span class="status confirmed">✓ Confirmed</span>
+    </div>
+
+    <div class="booking-item">
+      <h4>Hair Coloring - Emma Wilson</h4>
+      <p><strong>Date:</strong> December 20, 2025 at 2:00 PM</p>
+      <p><strong>Price:</strong> $75</p>
+      <span class="status pending">⏳ Pending</span>
+    </div>
+
+    <div class="booking-item">
+      <h4>Highlights - Michelle Davis</h4>
+      <p><strong>Date:</strong> January 10, 2026 at 11:00 AM</p>
+      <p><strong>Price:</strong> $95</p>
+      <span class="status confirmed">✓ Confirmed</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  function handleBooking(e) {
+    e.preventDefault();
+    alert("Booking submitted! Our team will confirm within 24 hours.");
+    // Reset form
+    document.querySelector("form").reset();
+  }
+
+  // Set minimum date to today
+  document.getElementById("date").min = new Date().toISOString().split("T")[0];
+
+  // Update summary when form changes
+  document.getElementById("stylist").addEventListener("change", updateSummary);
+  document.getElementById("service").addEventListener("change", updateSummary);
+  document.getElementById("date").addEventListener("change", updateSummary);
+  document.getElementById("time").addEventListener("change", updateSummary);
+
+  function updateSummary() {
+    const stylist =
+      document.getElementById("stylist").options[
+        document.getElementById("stylist").selectedIndex
+      ].text;
+    const service =
+      document.getElementById("service").options[
+        document.getElementById("service").selectedIndex
+      ].text;
+    const date = document.getElementById("date").value;
+    const time =
+      document.getElementById("time").options[
+        document.getElementById("time").selectedIndex
+      ].text;
+
+    document.getElementById("summaryStylest").textContent =
+      stylist || "Not selected";
+    document.getElementById("summaryService").textContent =
+      service || "Not selected";
+    document.getElementById("summaryDate").textContent = date
+      ? new Date(date).toLocaleDateString()
+      : "Not selected";
+    document.getElementById("summaryTime").textContent = time || "Not selected";
+
+    // Get price from selected service
+    const selectedOption =
+      document.getElementById("service").selectedOptions[0];
+    const price = selectedOption.dataset.price || 0;
+    document.getElementById("summaryPrice").textContent = "$" + price;
+    document.getElementById("totalPrice").textContent = "$" + price;
+  }
+</script>
+{% endblock %}

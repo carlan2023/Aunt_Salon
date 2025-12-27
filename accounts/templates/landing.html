@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+{% block title %}Home - Aunt Salon{% endblock %}
+
+{% block extra_css %}
+<style>
+  .hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 50px;
+  }
+
+  .hero h1 {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .hero p {
+    font-size: 1.3em;
+    margin-bottom: 30px;
+    opacity: 0.95;
+  }
+
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+  }
+
+  .cta-buttons .btn {
+    padding: 15px 40px;
+    font-size: 1.1em;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: white;
+    color: #667eea;
+  }
+
+  .btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin: 50px 0;
+  }
+
+  .feature {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .feature-icon {
+    font-size: 3em;
+    margin-bottom: 15px;
+  }
+
+  .feature h3 {
+    color: #667eea;
+    margin-bottom: 10px;
+  }
+
+  .testimonials {
+    background: #f0f4ff;
+    padding: 50px;
+    border-radius: 10px;
+    margin: 50px 0;
+  }
+
+  .testimonials h2 {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+  }
+
+  .testimonial {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  .testimonial p {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 15px;
+  }
+
+  .testimonial-author {
+    font-weight: bold;
+    color: #667eea;
+  }
+
+  .rating {
+    color: #ffc107;
+    margin-bottom: 10px;
+  }
+
+  .cta-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 50px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 50px 0;
+  }
+
+  .cta-section h2 {
+    color: white;
+    margin-bottom: 20px;
+  }
+
+  .cta-section p {
+    font-size: 1.1em;
+    margin-bottom: 30px;
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 2em;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+
+    .cta-buttons .btn {
+      width: 100%;
+    }
+  }
+</style>
+
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+  <div class="hero">
+    <h1>✨ Welcome to Aunt Salon</h1>
+    <p>
+      Your Premier Destination for Professional Hair Styling & Beauty Services
+    </p>
+    <div class="cta-buttons">
+      <a href="/stylists/" class="btn btn-primary">Browse Stylists</a>
+      <a href="/services/" class="btn btn-primary">View Services</a>
+      <a href="/bookings/" class="btn btn-primary">Book Appointment</a>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">👩‍💼</div>
+      <h3>Expert Stylists</h3>
+      <p>
+        Our team of experienced and certified hairdressers are ready to provide
+        you with the perfect look.
+      </p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">🎨</div>
+      <h3>Premium Services</h3>
+      <p>
+        From haircuts to color treatments, we offer a full range of professional
+        beauty services.
+      </p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">📅</div>
+      <h3>Easy Booking</h3>
+      <p>
+        Book appointments online with real-time availability updates and instant
+        confirmation.
+      </p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-icon">⭐</div>
+      <h3>Customer Reviews</h3>
+      <p>
+        Read reviews from satisfied customers and share your experience with our
+        services.
+      </p>
+    </div>
+  </div>
+
+  <div class="testimonials">
+    <h2>What Our Customers Say</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial">
+        <div class="rating">★★★★★</div>
+        <p>
+          "Sarah gave me the best haircut I've ever had! She really understood
+          what I wanted and delivered exactly that. Highly recommended!"
+        </p>
+        <div class="testimonial-author">- Michelle, 45 reviews</div>
+      </div>
+
+      <div class="testimonial">
+        <div class="rating">★★★★★</div>
+        <p>
+          "The color service was amazing. Emma is a true artist. My hair looks
+          vibrant and healthy. Will definitely be back!"
+        </p>
+        <div class="testimonial-author">- Jessica, 38 reviews</div>
+      </div>
+
+      <div class="testimonial">
+        <div class="rating">★★★★★</div>
+        <p>
+          "Michelle's bridal hair styling was absolutely perfect. I felt like a
+          princess on my special day. Worth every penny!"
+        </p>
+        <div class="testimonial-author">- Amanda, 52 reviews</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <h2>Ready to Transform Your Look?</h2>
+    <p>
+      Book your appointment today and experience the difference of professional
+      hair care.
+    </p>
+    <a
+      href="/bookings/"
+      class="btn btn-primary"
+      style="background: white; color: #667eea; font-weight: bold"
+      >Book Now</a
+    >
+  </div>
+
+  <div
+    style="
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      text-align: center;
+    "
+  >
+    <h3 style="color: #667eea; margin-bottom: 15px">
+      💻 Developer? Access Our API
+    </h3>
+    <p style="margin-bottom: 20px">
+      Build your own applications using our REST API with full access to
+      bookings, services, and more.
+    </p>
+    <a
+      href="/api/"
+      class="btn btn-primary"
+      style="background: #667eea; color: white"
+      >View API Documentation</a
+    >
+  </div>
+</div>
+{% endblock %}

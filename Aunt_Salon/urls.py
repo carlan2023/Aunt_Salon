@@ -1,27 +1,20 @@
-"""
-URL configuration for Aunt_Salon project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+# hairline/urls.py
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+
+# Import your views for auth
+from accounts.views import (
+    RegisterView, LoginView, landing_page, stylists_page, 
+    services_page, bookings_page, register_page, login_page
+)
+
+# Router for all API endpoints
 from rest_framework.routers import DefaultRouter
-from accounts.views import RegisterView, LoginView
 from hairdressers.views import HairdresserViewSet, ServiceViewSet, AvailabilityViewSet
 from bookings.views import BookingViewSet, ReviewViewSet
+
 
 router = DefaultRouter()
 router.register(r'hairdressers', HairdresserViewSet)
@@ -31,8 +24,21 @@ router.register(r'bookings', BookingViewSet)
 router.register(r'reviews', ReviewViewSet)
 
 urlpatterns = [
+    path('', landing_page, name='landing'),
+    path('stylists/', stylists_page, name='stylists'),
+    path('services/', services_page, name='services'),
+    path('bookings/', bookings_page, name='bookings'),
+    path('register/', register_page, name='register'),
+    path('login/', login_page, name='login'),
     path('admin/', admin.site.urls),
-    path('api/auth/register/', RegisterView.as_view(), name='register'),
-    path('api/auth/login/', LoginView.as_view(), name='login'),
+    
+    # Auth endpoints
+    path('api/auth/register/', RegisterView.as_view(), name='api-register'),
+    path('api/auth/login/', LoginView.as_view(), name='api-login'),
+    
+    # API routes
     path('api/', include(router.urls)),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+# Serve media files during development
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

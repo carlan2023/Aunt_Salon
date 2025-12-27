@@ -1,0 +1,281 @@
+{% extends 'base.html' %}
+{% block title %}Services - Aunt Salon{% endblock %}
+
+{% block extra_css %}
+<style>
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin: 30px 0;
+  }
+
+  .service-card {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #667eea;
+    transition: all 0.3s ease;
+  }
+
+  .service-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+  }
+
+  .service-icon {
+    font-size: 3em;
+    margin-bottom: 15px;
+  }
+
+  .service-card h3 {
+    color: #667eea;
+    margin-bottom: 10px;
+  }
+
+  .service-description {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+
+  .service-price {
+    font-size: 1.5em;
+    color: #764ba2;
+    font-weight: bold;
+    margin: 15px 0;
+  }
+
+  .service-duration {
+    background: #f0f4ff;
+    padding: 8px 12px;
+    border-radius: 5px;
+    display: inline-block;
+    color: #667eea;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+  }
+
+  .btn-select {
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+  }
+
+  .btn-select:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+
+  .category-tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    padding: 12px 25px;
+    border: 2px solid #667eea;
+    background: white;
+    color: #667eea;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+  }
+
+  .tab-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: transparent;
+  }
+
+  .tab-btn:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: transparent;
+  }
+</style>
+
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+  <h1>🎨 Our Services</h1>
+  <p>
+    Discover our complete range of professional hair and beauty services,
+    designed to make you look and feel your best.
+  </p>
+
+  <div class="category-tabs">
+    <button class="tab-btn active" onclick="filterServices('all')">
+      All Services
+    </button>
+    <button class="tab-btn" onclick="filterServices('cutting')">Cutting</button>
+    <button class="tab-btn" onclick="filterServices('coloring')">
+      Coloring
+    </button>
+    <button class="tab-btn" onclick="filterServices('treatments')">
+      Treatments
+    </button>
+    <button class="tab-btn" onclick="filterServices('special')">
+      Special Occasions
+    </button>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card" data-category="cutting">
+      <div class="service-icon">✂️</div>
+      <h3>Haircut</h3>
+      <p class="service-description">
+        Professional haircut tailored to your face shape and preferences.
+        Includes wash and styling.
+      </p>
+      <div class="service-duration">⏱️ 45 minutes</div>
+      <div class="service-price">$45</div>
+      <button class="btn-select" onclick="location.href='/api/bookings/'">
+        Book Now
+      </button>
+    </div>
+
+    <div class="service-card" data-category="cutting">
+      <div class="service-icon">💈</div>
+      <h3>Fade & Trim</h3>
+      <p class="service-description">
+        Precision fade with detailed trim for a sharp, modern look.
+      </p>
+      <div class="service-duration">⏱️ 30 minutes</div>
+      <div class="service-price">$35</div>
+      <button class="btn-select" onclick="location.href='/api/bookings/'">
+        Book Now
+      </button>
+    </div>
+
+    <div class="service-card" data-category="coloring">
+      <div class="service-icon">🎨</div>
+      <h3>Hair Color</h3>
+      <p class="service-description">
+        Full hair color service with premium quality dyes. Includes consultation
+        and treatment.
+      </p>
+      <div class="service-duration">⏱️ 90 minutes</div>
+      <div class="service-price">$75</div>
+      <button class="btn-select" onclick="location.href='/api/bookings/'">
+        Book Now
+      </button>
+    </div>
+
+    <div class="service-card" data-category="coloring">
+      <div class="service-icon">✨</div>
+      <h3>Highlights & Balayage</h3>
+      <p class="service-description">
+        Partial highlights or balayage for a dimensional, sun-kissed look.
+      </p>
+      <div class="service-duration">⏱️ 120 minutes</div>
+      <div class="service-price">$95</div>
+      <button class="btn-select" onclick="location.href='/api/bookings/'">
+        Book Now
+      </button>
+    </div>
+
+    <div class="service-card" data-category="treatments">
+      <div class="service-icon">💆</div>
+      <h3>Deep Conditioning Treatment</h3>
+      <p class="service-description">
+        Intensive moisture treatment for dry, damaged, or color-treated hair.
+      </p>
+      <div class="service-duration">⏱️ 45 minutes</div>
+      <div class="service-price">$40</div>
+      <button class="btn-select" onclick="location.href='/api/bookings/'">
+        Book Now
+      </button>
+    </div>
+
+    <div class="service-card" data-category="treatments">
+      <div class="service-icon">🌊</div>
+      <h3>Keratin Treatment</h3>
+      <p class="service-description">
+        Smoothing treatment for frizz control and improved manageability.
+      </p>
+      <div class="service-duration">⏱️ 180 minutes</div>
+      <div class="service-price">$150</div>
+      <button class="btn-select" onclick="location.href='/api/bookings/'">
+        Book Now
+      </button>
+    </div>
+
+    <div class="service-card" data-category="special">
+      <div class="service-icon">👰</div>
+      <h3>Bridal Hairstyle</h3>
+      <p class="service-description">
+        Complete bridal hair service with trial run and consultation.
+      </p>
+      <div class="service-duration">⏱️ 90 minutes</div>
+      <div class="service-price">$120</div>
+      <button class="btn-select" onclick="location.href='/api/bookings/'">
+        Book Now
+      </button>
+    </div>
+
+    <div class="service-card" data-category="special">
+      <div class="service-icon">🎉</div>
+      <h3>Event Styling</h3>
+      <p class="service-description">
+        Professional styling for any special event or occasion.
+      </p>
+      <div class="service-duration">⏱️ 60 minutes</div>
+      <div class="service-price">$85</div>
+      <button class="btn-select" onclick="location.href='/api/bookings/'">
+        Book Now
+      </button>
+    </div>
+  </div>
+
+  <div
+    style="
+      text-align: center;
+      margin-top: 40px;
+      background: #f0f4ff;
+      padding: 30px;
+      border-radius: 8px;
+    "
+  >
+    <h3 style="color: #667eea; margin-bottom: 15px">
+      Package Deals Available!
+    </h3>
+    <p style="color: #666; margin-bottom: 15px">
+      Book multiple services and save up to 20%. Contact us for custom packages.
+    </p>
+    <a href="/api/services/" class="btn btn-primary">View All Services (API)</a>
+  </div>
+</div>
+
+<script>
+  function filterServices(category) {
+    const cards = document.querySelectorAll(".service-card");
+    const tabs = document.querySelectorAll(".tab-btn");
+
+    tabs.forEach((tab) => tab.classList.remove("active"));
+    event.target.classList.add("active");
+
+    cards.forEach((card) => {
+      if (
+        category === "all" ||
+        card.getAttribute("data-category") === category
+      ) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+</script>
+{% endblock %}
